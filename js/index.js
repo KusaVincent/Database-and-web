@@ -1,142 +1,158 @@
 var firebaseConfig = {
-  apiKey: "AIzaSyDF7Mt6g9LaOHm46an9Zc6RSfS3Za2UEF4",
-  authDomain: "invo-627f9.firebaseapp.com",
-  databaseURL: "https://invo-627f9.firebaseio.com",
-  projectId: "invo-627f9",
-  storageBucket: "invo-627f9.appspot.com",
-  messagingSenderId: "848481445459",
-  appId: "1:848481445459:web:4dcbac42eeea60d5f748a6",
-  measurementId: "G-TBZDV0CVWN"
+    apiKey: "AIzaSyDF7Mt6g9LaOHm46an9Zc6RSfS3Za2UEF4",
+    authDomain: "invo-627f9.firebaseapp.com",
+    databaseURL: "https://invo-627f9.firebaseio.com",
+    projectId: "invo-627f9",
+    storageBucket: "invo-627f9.appspot.com",
+    messagingSenderId: "848481445459",
+    appId: "1:848481445459:web:4dcbac42eeea60d5f748a6",
+    measurementId: "G-TBZDV0CVWN"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 firebase.auth.Auth.Persistence.LOCAL;
 
-$("#btn-signup").click(function() {
-  var email = $("#email").val();
-  var password = $("#password").val();
-  var cPassword = $("#confirmpassword").val();
+//TODO
+//firebase.analytics();
 
-  if (email != "" && password != "" && cPassword != "") {
-    if (password == cPassword) {
-      var result = firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
+console.log(firebase);
 
-      result.catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
+$("#btn-signin").click(function () {
+    // console.log("Sign in Clicked");
 
-        console.log(errorCode);
-        console.log(errorMessage);
+    var email = $("#email").val();
+    var password = $("#password").val();
 
-        window.alert("Message : " + errorMessage);
-      });
+    if (email == "" && password == "") {
+        window.alert("Please enter the details");
+
     } else {
-      window.alert("Password do not match");
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+
+            var errCode = error.code;
+            var message = error.message;
+
+            window.alert("You have an error " + message);
+        });
     }
-  } else {
-    window.alert("fill all fields");
-  }
+
 });
 
-$("#btn-login").click(function() {
-  var email = $("#email").val();
-  var password = $("#password").val();
 
-  if (email != "" && password != "") {
-    var result = firebase.auth().signInWithEmailAndPassword(email, password);
-    result.catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
 
-      console.log(errorCode);
-      console.log(errorMessage);
+$("#btn-signup").click(function () {
 
-      window.alert("Message : " + errorMessage);
+    var email = $("#email").val();
+    var password = $("#password").val();
+    var confirmPassword = $("#confirmPassword").val();
+
+    if (email != "" && password != "" && confirmPassword != "") {
+
+        if (password == confirmPassword) {
+
+            firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
+
+                window.alert("Your Signup successful with name " + user.displayName);
+
+            }, function (error) {
+
+                var errCode = error.code;
+                var message = error.message;
+
+                window.alert("You have an error " + message);
+
+
+            });
+
+
+        } else {
+            window.alert("both the passwords must be same");
+        }
+
+
+    } else {
+        window.alert("Please enter the details");
+    }
+});
+
+
+$("#btn-resetPassword").click(function () {
+
+    var auth = firebase.auth();
+    var emailAddress = $("#email").val();
+
+    if (emailAddress != "") {
+        auth.sendPasswordResetEmail(emailAddress).then(function () {
+            // Email sent.
+            window.alert("An email is sent please check your inbox.");
+        }).catch(function (error) {
+            // An error happened.
+            console.log("Email sending error " + error.message);
+        });
+    } else {
+        window.alert("Please enter the email");
+    }
+});
+
+$("#btn-update").click(function () {
+
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var country = $("#country").val();
+    var phone = $("#phone").val();
+    var gender = $("#gender").val();
+    var address = $("#address").val();
+    var bio = $("#bio").val();
+
+    if (firstName != "" && lastName != "" && country != "" && phone != "" && address != "" && bio != "" && gender != "") {
+
+        console.log(firstName, lastName, country, phone, gender, address, bio);
+
+        var user = firebase.auth().currentUser;
+        console.log(user);
+
+        var databaseRef = firebase.database().ref().child("Users");
+        var userRef = databaseRef.child(user.uid);
+
+        var userData = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "country": country,
+            "phone": phone,
+            "gender": gender,
+            "address": address,
+            "bio": bio
+        }
+
+        userRef.set(userData, function (error) {
+
+            if (error) {
+                window.alert("upload unsuccessful with error message " + error.message);
+            } else {
+                window.alert("upload successful");
+                window.location.href = "mainPage.html";
+            }
+
+        });
+
+    } else {
+        window.alert("Please fill all the details!");
+    }
+
+
+
+});
+
+
+function switchView(view) {
+
+    $.get({
+        url: view,
+        cache: false
+    }).then(function (data) {
+        $("#container").html(data);
     });
-  } else {
-    window.alert("fill all fields");
-  }
-});
 
-$("#btn-resetPassword").click(function() {
-  var auth = firebase.auth();
-  var email = $("#email").val();
-
-  if (email != "") {
-    auth
-      .sendPasswordResetEmail(email)
-      .then(function() {
-        window.alert("Email has been sent please verify");
-      })
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        console.log(errorCode);
-        console.log(errorMessage);
-
-        window.alert("Message : " + errorMessage);
-      });
-  } else {
-    window.alert("enter email first");
-  }
-});
-
-$("#btn-logout").click(function() {
-  firebase.auth().signOut();
-});
-
-$("#btn-update").click(function() {
-  var phone = $("#phone").val();
-  var address = $("#address").val();
-  var bio = $("#bio").val();
-  var firstName = $("#firstName").val();
-  var secondName = $("#secondName").val();
-  var gender = $("#gender").val();
-  var country = $("#country").val();
-
-  var rootRef = firebase
-    .database()
-    .ref()
-    .child("Users");
-  var userID = firebase.auth().currentUser.uid;
-  var usersRef = rootRef.child(userID);
-
-  if (
-    firstName != "" &&
-    secondName != "" &&
-    phone != "" &&
-    address != "" &&
-    bio != "" &&
-    gender != "" &&
-    country != ""
-  ) {
-    var userData = {
-      phone: phone,
-      address: address,
-      bio: bio,
-      firstName: firstName,
-      secondName: secondName,
-      gender: gender,
-      country: country
-    };
-    usersRef.set(userData, function(error) {
-      if (error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        console.log(errorCode);
-        console.log(errorMessage);
-
-        window.alert("Message : " + errorMessage);
-      } else {
-        window.location.href = "MainPage.html";
-      }
-    });
-  } else {
-    window.alert("fill all fields first");
-  }
-});
+}
