@@ -1,5 +1,5 @@
 <!----------------Blog post area starts-------------------------->
-<div class="jumbotron bg-dark" style="margin-top: 15px">
+<div class="jumbotron bg-secondary" style="margin-top: 15px">
     <script>
         var counter = 0;
         const TOTAL = 5000;
@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group">
-                <button class="btn btn-light bg-light text-dark" id="save-blog" type="button"
+                <button class="btn btn-light bg-light text-secondary" id="save-blog" type="button"
                     style="width: 150px;height:60px">
                     Post
                 </button>
@@ -57,12 +57,12 @@
 
 <!----------------After Blog post area-------------------------->
 
-<hr class="bg-dark">
-<div class="text-center bg-light text-dark">
+<hr class="bg-primary">
+<div class="text-center bg-light text-primary">
     <h3>All New Blogs</h3>
 </div>
 
-<hr class="bg-dark">
+<hr class="bg-primary">
 <div class="container-fluid bg-3">
     <div class="col-sm-12" id="blogs">
 
@@ -246,7 +246,8 @@
             blogs.forEach(function (singleBlock) {
                 counter = counter + 1;
                 console.log(singleBlock.val().image);
-                blogsHtml += "<div class='jumbotron bg-light text-dark boarder boarder-dark'>";
+                blogsHtml +=
+                    "<div class='jumbotron bg-light text-primary boarder boarder-primary'>";
 
                 blogsHtml += "<div> <img width='1000px' height= '450' src ='";
                 blogsHtml += singleBlock.val().image;
@@ -273,7 +274,7 @@
                 blogsHtml += "</div> <br>";
 
                 blogsHtml += "</div>";
-                blogsHtml += "<hr class='bg-dark'>";
+                blogsHtml += "<hr class='bg-primary'>";
                 blogsHtml += "<br><br><br>";
             });
 
