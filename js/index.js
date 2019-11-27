@@ -1,13 +1,4 @@
-var firebaseConfig = {
-    apiKey: "AIzaSyDF7Mt6g9LaOHm46an9Zc6RSfS3Za2UEF4",
-    authDomain: "invo-627f9.firebaseapp.com",
-    databaseURL: "https://invo-627f9.firebaseio.com",
-    projectId: "invo-627f9",
-    storageBucket: "invo-627f9.appspot.com",
-    messagingSenderId: "848481445459",
-    appId: "1:848481445459:web:4dcbac42eeea60d5f748a6",
-    measurementId: "G-TBZDV0CVWN"
-};
+
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
