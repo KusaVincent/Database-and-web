@@ -9,6 +9,7 @@ var firebaseConfig = {
   measurementId: "nxcvgjdf"
 };
 
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -19,7 +20,7 @@ firebase.auth.Auth.Persistence.LOCAL;
 
 console.log(firebase);
 
-$("#btn-signin").click(function() {
+$("#btn-signin").click(function () {
   // console.log("Sign in Clicked");
 
   var email = $("#email").val();
@@ -31,7 +32,7 @@ $("#btn-signin").click(function() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
+      .catch(function (error) {
         var errCode = error.code;
         var message = error.message;
 
@@ -40,7 +41,7 @@ $("#btn-signin").click(function() {
   }
 });
 
-$("#btn-signup").click(function() {
+$("#btn-signup").click(function () {
   var email = $("#email").val();
   var password = $("#password").val();
   var confirmPassword = $("#confirmPassword").val();
@@ -51,12 +52,12 @@ $("#btn-signup").click(function() {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(
-          function() {
+          function () {
             window.alert(
               "Your Signup successful with name " + user.displayName
             );
           },
-          function(error) {
+          function (error) {
             var errCode = error.code;
             var message = error.message;
 
@@ -71,18 +72,18 @@ $("#btn-signup").click(function() {
   }
 });
 
-$("#btn-resetPassword").click(function() {
+$("#btn-resetPassword").click(function () {
   var auth = firebase.auth();
   var emailAddress = $("#email").val();
 
   if (emailAddress != "") {
     auth
       .sendPasswordResetEmail(emailAddress)
-      .then(function() {
+      .then(function () {
         // Email sent.
         window.alert("An email is sent please check your inbox.");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // An error happened.
         console.log("Email sending error " + error.message);
       });
@@ -91,7 +92,7 @@ $("#btn-resetPassword").click(function() {
   }
 });
 
-$("#btn-update").click(function() {
+$("#btn-update").click(function () {
   var firstName = $("#firstName").val();
   var lastName = $("#lastName").val();
   var country = $("#country").val();
@@ -130,7 +131,7 @@ $("#btn-update").click(function() {
       bio: bio
     };
 
-    userRef.set(userData, function(error) {
+    userRef.set(userData, function (error) {
       if (error) {
         window.alert("upload unsuccessful with error message " + error.message);
       } else {
@@ -147,7 +148,7 @@ function switchView(view) {
   $.get({
     url: view,
     cache: false
-  }).then(function(data) {
+  }).then(function (data) {
     $("#container").html(data);
   });
 }

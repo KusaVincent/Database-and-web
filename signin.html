@@ -76,7 +76,7 @@
                     <a href="forgotpassword.html" class="text-primary">Forgot Password?</a>
                 </div>
 
-                <div class="w-full text-center" style="margin-top: 76%; font-size: 15px">
+                <div class="w-full text-center" style="margin-top: 8%; font-size: 15px">
                     <a href="signup.html" class="text-primary">Don't have account?</a>
                 </div>
 
@@ -106,7 +106,7 @@
                 console.log(user);
                 var userID = firebase.auth().currentUser.uid;
 
-                firebase.database().ref('users/' + userID).once('value').then(function (snapshot) {
+                firebase.database().ref('Users/' + userID).once('value').then(function (snapshot) {
 
                     if (snapshot.val()) {
                         window.location.href = "mainPage.html";

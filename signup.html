@@ -74,7 +74,7 @@
                     </button>
                 </div>
 
-                <div class="w-full text-center" style="margin-top: 50%; font-size: 15px">
+                <div class="w-full text-center" style="margin-top: 0%; font-size: 15px">
                     <a href="signin.html" class="text-primary">Already have an account?</a>
                 </div>
 
@@ -96,7 +96,7 @@
 
                 var userID = firebase.auth().currentUser.uid;
 
-                firebase.database().ref('users/' + userID).once('value').then(function (snapshot) {
+                firebase.database().ref('Users/' + userID).once('value').then(function (snapshot) {
 
                     if (snapshot.val()) {
                         window.location.href = "mainPage.html";
